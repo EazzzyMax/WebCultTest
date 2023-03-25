@@ -30,6 +30,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
+    fontWeight: '900',
+    letterSpacing: 0.5,
     fontSize: 18,
   },
 });

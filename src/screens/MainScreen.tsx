@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
   },
   emailText: {
+    color: '#333',
     fontSize: 18,
   },
   logoutButton: {
@@ -112,16 +113,18 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
-    resizeMode: 'center',
+    resizeMode: 'cover',
     borderRadius: 15,
   },
   title: {
+    color: '#333',
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 30,
     marginBottom: 10,
   },
   description: {
+    color: '#444',
     fontSize: 16,
   },
   footer: {
