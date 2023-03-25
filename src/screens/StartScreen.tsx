@@ -5,7 +5,7 @@ import Button from '../components/Button';
 
 const StartScreen = ({navigation}: {navigation: any}) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.container}>
         <Logo />
         <Button

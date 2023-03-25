@@ -1,20 +1,15 @@
 import React, {useState} from 'react';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Alert,
-  SafeAreaView,
-} from 'react-native';
-import {validateEmail} from '../utils/helpers';
+import {View, StyleSheet, Alert, SafeAreaView} from 'react-native';
+import {emailIsValid} from '../utils/helpers';
 import Button from '../components/Button';
+import Input from '../components/Input';
 
 const LoginScreen = ({navigation}: {navigation: any}) => {
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
   const handleLogin = () => {
-    if (!validateEmail(emailInput)) {
+    if (!emailIsValid(emailInput)) {
       Alert.alert('Ошибка', 'Введите корректный адрес электронной почты');
     } else if (!passwordInput) {
       Alert.alert('Ошибка', 'Введите пароль');
@@ -24,16 +19,16 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.container}>
-        <TextInput
+        <Input
           style={styles.input}
           placeholder="Email"
           keyboardType="email-address"
           onChangeText={setEmailInput}
           value={emailInput}
         />
-        <TextInput
+        <Input
           style={styles.input}
           placeholder="Пароль"
           secureTextEntry
@@ -54,12 +49,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#CCC',
-    borderRadius: 15,
     marginBottom: 10,
-    paddingLeft: 15,
-    height: 50,
   },
   wrapper: {
     backgroundColor: 'black',

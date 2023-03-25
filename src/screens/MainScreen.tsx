@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Modal,
   StyleSheet,
   TouchableOpacity,
   Image,
@@ -10,12 +9,18 @@ import {
   Linking,
   SafeAreaView,
 } from 'react-native';
-import axios from 'axios';
+import {IAPODData} from '../types';
+import {fetchData} from '../utils/api';
+import ImagePreviewModal from '../components/ImagePreviewModal';
 
 const MainScreen = ({route, navigation}: {route: any; navigation: any}) => {
   const {email} = route.params;
-  const [modalVisible, setModalVisible] = useState(false);
-  const [data, setData] = useState<any>(null);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [data, setData] = useState<IAPODData | null>(null);
+
+  useEffect(() => {
+    fetchData().then(setData);
+  }, []);
 
   const openModal = () => {
     setModalVisible(true);
@@ -23,22 +28,6 @@ const MainScreen = ({route, navigation}: {route: any; navigation: any}) => {
 
   const closeModal = () => {
     setModalVisible(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = () => {
-    //это апи иногда возвращает видео, а не картинку
-    axios
-      .get('https://apod.as93.net/apod')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
   };
 
   const handleLogout = () => {
@@ -50,29 +39,13 @@ const MainScreen = ({route, navigation}: {route: any; navigation: any}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <ImagePreviewModal
+        modalVisible={modalVisible}
+        hdurl={data?.hdurl}
+        closeModal={closeModal}
+      />
       <View style={styles.container}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={closeModal}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-                <Text style={styles.closeText}>×</Text>
-              </TouchableOpacity>
-              {data && data.hdurl && (
-                <Image
-                  source={{uri: data.hdurl}}
-                  style={styles.hdImage}
-                  resizeMode="contain"
-                />
-              )}
-            </View>
-          </View>
-        </Modal>
-
         <View style={styles.header}>
           <Text style={styles.emailText}>{email}</Text>
           <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
@@ -116,6 +89,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
   emailText: {
     fontSize: 18,
@@ -137,7 +112,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
-    resizeMode: 'cover',
+    resizeMode: 'center',
     borderRadius: 15,
   },
   title: {
@@ -157,31 +132,6 @@ const styles = StyleSheet.create({
   footerText: {
     color: 'white',
     fontSize: 14,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalView: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
-  },
-  closeText: {
-    fontSize: 30,
-    color: '#FFF',
-  },
-  hdImage: {
-    width: '100%',
-    height: '80%',
   },
   previewImage: {
     width: '100%',

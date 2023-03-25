@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Text,
-  View,
   StyleSheet,
   TouchableOpacity,
   TouchableOpacityProps,
@@ -11,12 +10,10 @@ interface IButton extends TouchableOpacityProps {
   title: string;
 }
 
-const Button = ({title, ...props}: IButton) => {
+const Button = ({title, style, ...props}: IButton) => {
   return (
-    <TouchableOpacity {...props}>
-      <View style={styles.wrapper}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
+    <TouchableOpacity style={[styles.wrapper, style]} {...props}>
+      <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );
 };
