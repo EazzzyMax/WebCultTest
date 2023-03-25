@@ -11,7 +11,7 @@ const App = () => {
   const navigationRef = useRef<NavigationContainerRef<RootParamList> | null>(
     null,
   );
-  const [isConnected, setIsConnected] = useState<boolean | null>(true); // Добавьте состояние подключения
+  const [isConnected, setIsConnected] = useState<boolean | null>(true);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -25,12 +25,8 @@ const App = () => {
 
   useEffect(() => {
     if (isConnected) {
-      console.log('connected');
-      // Если подключение есть, переходите на первый экран
       navigationRef.current?.navigate('Start');
     } else {
-      console.log('disconnected');
-      // Если подключение отсутствует, переходите на экран NoConnection
       navigationRef.current?.navigate('NoConnection');
     }
   }, [isConnected]);

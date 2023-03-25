@@ -51,18 +51,6 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 10,
   },
-  wrapper: {
-    backgroundColor: 'black',
-    paddingHorizontal: 20,
-    height: 50,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    color: 'white',
-    fontSize: 18,
-  },
 });
 
 export default LoginScreen;
